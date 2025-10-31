@@ -32,7 +32,7 @@ function Get-TaskDetails {
 
     foreach ($task in $tasks) {
         $scTask = $task.number
-        $uri = "https://[YOUR_INSTANCE].service-now.com/api/sains/v1/sctask_inbound?sysparm_query=$scTask"
+        $uri = "https://[YOUR_INSTANCE].service-now.com/api/v1/sctask_inbound?sysparm_query=$scTask"
         $response = Invoke-WebRequest -Uri $uri -Method Get -Credential $snCreds
         $data = $response.Content | ConvertFrom-Json
         $taskDetails = $data.result
@@ -205,7 +205,7 @@ Thanks & Regards,
 
         $response = Invoke-RestMethod -Uri "[YOUR_SERVICENOW_TASK_URI]" -Method Get -Credential $snCreds -Headers $headers
         $sysId = $response.result[0].sys_id
-        $updateUri = "https://[YOUR_INSTANCE].service-now.com/api/sains/v2/sctask_inbound"
+        $updateUri = "https://[YOUR_INSTANCE].service-now.com/api/v2/sctask_inbound"
         Invoke-RestMethod -Uri $updateUri -Method Post -Credential $snCreds -Headers $headers -Body $wrkNotes
     }
 }
@@ -461,7 +461,7 @@ $company
             u_status       = "3"  # Closed status
         } | ConvertTo-Json
 
-        $updateUri = "https://[YOUR_INSTANCE].service-now.com/api/sains/v2/sctask_inbound"
+        $updateUri = "https://[YOUR_INSTANCE].service-now.com/api/v2/sctask_inbound"
         Invoke-RestMethod -Uri $updateUri -Method Post -Credential $snCreds -Headers $headers -Body $wrkNotes
     }
 }
@@ -486,4 +486,5 @@ Grant-ExchangeAccess
 Send-CompletionEmails
 
 Get-PSSession | Remove-PSSession
+
 Write-Host "Script Completed" -ForegroundColor Green
